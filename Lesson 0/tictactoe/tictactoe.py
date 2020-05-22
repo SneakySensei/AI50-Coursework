@@ -127,56 +127,51 @@ def minimax(board):
     # Shuffling the set of actions makes equal valeud moved randomised AI
     actionList = list(actions(board))
     random.shuffle(actionList)
-
+    print(actionList)
     # If maximizing player is AI
     if player(board) is X:
-        # Keeping track of best action and corresponding score
-        bestAction = None
-        v = -math.inf
-
-        # Calling helper function for all possible results with alpha beta pruning
-        for action in actionList:
-            minValue = minimum(result(board, action))
-            if minValue > v:
-                v = minValue
-                bestAction = action
+        _, bestAction = maximum(board, -math.inf, math.inf)
+        print(_)
         return bestAction
-
-    # If minimising player is AI
     elif player(board) is O:
-        # Keeping track of best action and corresponding score
-        bestAction = None
-        v = math.inf
-
-        # Calling helper function for all possible results with alpha beta pruning
-        for action in actionList:
-            maxValue = maximum(result(board, action))
-            if maxValue < v:
-                v = maxValue
-                bestAction = action
+        _, bestAction = minimum(board, -math.inf, math.inf)
+        print(_)
         return bestAction
 
 
 # Helper function for minimax. Called by minimizing player on its possible moves.
-def maximum(board):
+def maximum(board, alpha, beta):
     # If game has ended return utility of the board
     if (terminal(board)):
-        return utility(board)
+        return (utility(board), None)
 
-    maxVal = -math.inf
+    bestAction = None
+    bestScore = -math.inf
     for action in actions(board):
-        value = minimum(result(board, action)) # Recursive call
-        maxVal = max(maxVal, value)
-    return maxVal
+        minValue, _ = minimum(result(board, action), alpha, beta)
+        if minValue > bestScore:
+            bestScore = minValue
+            bestAction = action
+        if bestScore >= beta:
+            break
+        alpha = max(alpha, bestScore)
+    return (bestScore, bestAction)
 
 # Helper function for minimax.  Called by maximizing player on its possible moves.
-def minimum(board):
+def minimum(board, alpha, beta):
     # If game has ended return utility of the board
     if (terminal(board)):
-        return utility(board)
+        return (utility(board), None)
     
-    minVal = math.inf
+    bestAction = None
+    bestScore = math.inf
+    
     for action in actions(board):
-        value = maximum(result(board, action)) # Recursive call
-        minVal = min(minVal, value)
-    return minVal
+        maxValue, _ = maximum(result(board, action), alpha, beta)
+        if maxValue < bestScore:
+            bestScore = maxValue
+            bestAction = action
+        if bestScore <= alpha:
+            break
+        beta = min(beta, bestScore)
+    return (bestScore, bestAction)
