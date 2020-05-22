@@ -113,7 +113,6 @@ while True:
             if ai_turn:
                 time.sleep(0.5)
                 move = ttt.minimax(board)
-                print(move)
                 board = ttt.result(board, move)
                 ai_turn = False
             else:
