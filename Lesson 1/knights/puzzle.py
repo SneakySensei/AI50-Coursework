@@ -27,6 +27,13 @@ knowledge0 = And(
 # B says nothing.
 knowledge1 = And(
     # TODO
+    # Universal truths about the game
+    Biconditional(AKnight, Not(AKnave)),    # If A is a knight then A is not a knave and vice-versa
+    Biconditional(BKnight, Not(BKnave)),    # If B is a knight then B is not a knave and vice-versa
+    Biconditional(CKnight, Not(CKnave)),    # If C is a knight then C is not a knave and vice-versa
+
+    # Statements saod by the characters
+    Biconditional(And(AKnave, BKnave), AKnight)     # If left clause is true then character is a knight
 )
 
 # Puzzle 2
