@@ -41,6 +41,14 @@ knowledge1 = And(
 # B says "We are of different kinds."
 knowledge2 = And(
     # TODO
+    # Universal truths about the game
+    Biconditional(AKnight, Not(AKnave)),    # If A is a knight then A is not a knave and vice-versa
+    Biconditional(BKnight, Not(BKnave)),    # If B is a knight then B is not a knave and vice-versa
+    Biconditional(CKnight, Not(CKnave)),    # If C is a knight then C is not a knave and vice-versa
+
+    # Statements saod by the characters
+    Biconditional(Or(And(AKnight, BKnight), And(AKnave, BKnave)), AKnight),     # If left clause is true then character is a knight
+    Biconditional(Or(And(AKnight, BKnave), And(AKnave, BKnight)), BKnight)     # If left clause is true then character is a knight
 )
 
 # Puzzle 3
