@@ -58,6 +58,16 @@ knowledge2 = And(
 # C says "A is a knight."
 knowledge3 = And(
     # TODO
+    # Universal truths about the game
+    Biconditional(AKnight, Not(AKnave)),    # If A is a knight then A is not a knave and vice-versa
+    Biconditional(BKnight, Not(BKnave)),    # If B is a knight then B is not a knave and vice-versa
+    Biconditional(CKnight, Not(CKnave)),    # If C is a knight then C is not a knave and vice-versa
+
+    # Statements saod by the characters
+    Biconditional(Or(AKnight, AKnave), AKnight),     # If left clause is true then character is a knight
+    Biconditional(AKnave, BKnight),     # If left clause is true then character is a knight
+    Biconditional(CKnave, BKnight),     # If left clause is true then character is a knight
+    Biconditional(AKnight, CKnight)     # If left clause is true then character is a knight
 )
 
 
